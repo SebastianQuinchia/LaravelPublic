@@ -1,0 +1,3 @@
+#For src test
+app/src/*
+!app/src/.gitkeep

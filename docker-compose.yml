@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  app_laravel:
+    container_name: app_laravel
+    build: ./app
+    volumes:
+      - ./app/src:/var/www
+    networks:
+      - app_network 
+    restart: always
+    ports:
+      - 80:80
+
+  database:
+    container_name: database
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: 'root_pass'
+      MYSQL_ROOT_PASSWORD: 'root_pass'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - database-laravel:/var/lib/mysql
+    networks:
+      - app_network   
+
+networks:
+  app_network:
+    name: app_network
+    driver: bridge
+
+volumes:
+  database-laravel:
